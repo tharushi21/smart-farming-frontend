@@ -16,7 +16,7 @@ import AdminExpenses from "../pages/AdminExpenses";
 import AdminHarvestPage from "../pages/AdminHarvestPage";
 import AdminWeatherPage from "../pages/AdminWeatherPage";
 import AdminReportPage from "../pages/AdminReportPage";
-import SettingsPage from "../pages/SettingsPage"; // මෙතනට ඔයාගේ SettingsPage එක import කරන්න
+import SettingsPage from "../pages/SettingsPage"; 
 import CropReportPage from "../pages/CropReportPage";
 import ExpenseReportPage from "../pages/ExpenseReportPage";
 import HarvestReportPage from "../pages/HarvestReportPage";
