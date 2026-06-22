@@ -34,6 +34,25 @@ npm install
 # Start development server
 npm run dev
 ```
+## Screenshots
+
+### Login Page
+![Login Page](./screenshots/login.png)
+
+### Dashboard
+![Dashboard](./screenshots/dashboard.png)
+
+### Crop Management
+![Crop Management](./screenshots/crops.png)
+
+### Harvest Analytics
+![Harvest Analytics](./screenshots/harvest.png)
+
+### Expense Management
+![Expense Management](./screenshots/expenses.png)
+
+### AI Farming Assistant
+![AI Farming Assistant](./screenshots/ai-chat.png)
 
 ## Backend API
 
