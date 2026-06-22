@@ -40,19 +40,19 @@ npm run dev
 ![Login Page](./screenshots/login.png)
 
 ### Dashboard
-![Dashboard](./screenshots/dashboard.png)
+![Dashboard](./screenshots/userdashboard.png)
 
 ### Crop Management
-![Crop Management](./screenshots/crops.png)
+![Crop Management](./screenshots/code.png)
 
 ### Harvest Analytics
-![Harvest Analytics](./screenshots/harvest.png)
+![Harvest Analytics](./screenshots/route.png)
 
 ### Expense Management
 ![Expense Management](./screenshots/expenses.png)
 
 ### AI Farming Assistant
-![AI Farming Assistant](./screenshots/ai-chat.png)
+![AI Farming Assistant](./screenshots/code.png)
 
 ## Backend API
 
