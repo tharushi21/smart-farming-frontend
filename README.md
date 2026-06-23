@@ -23,10 +23,9 @@ The frontend of the Smart Farming Management System is built using React, TypeSc
 * Responsive Mobile-Friendly Design
 
 ## Deployed URLs
-<<<<<<< HEAD
-- *Frontend:* [[Link to your Vercel/Netlify URL](https://smart-farming-frontend-ji2k-d41e743z6.vercel.app/dashboard)]
-- *Backend:* [[Link to your Render/Railway URL]]
 
+- *Frontend:* [Smart Farming Frontend](https://smart-farming-frontend-ji2k-d41e743z6.vercel.app/)
+- *Backend:* [Smart Farming Backend](https://smart-farming-backend-ddeg.vercel.app/)
 
 ## Setup Instructions
 
