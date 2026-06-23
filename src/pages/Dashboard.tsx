@@ -19,12 +19,13 @@ const Dashboard: React.FC = () => {
 
   // Weather state එක
   const [weather, setWeather] = useState({ temp: 0, description: "Loading..." });
-  const [ setIsModalOpen] = useState(false);
+  const [, setIsModalOpen] = useState(false);
+  const [, setAiAdvice] = useState("Loading...");
 
   const savedUserString = localStorage.getItem("user");
   const loggedInUser = savedUserString ? JSON.parse(savedUserString).name : "Guest User";
   const [chartData, setChartData] = useState([]);
-  const [ setAiAdvice] = useState("Loading...");
+  
   const [messages, setMessages] = useState([{ sender: 'bot', text: 'How can I help you?' }]);
 const [input, setInput] = useState('');
 
