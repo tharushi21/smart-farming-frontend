@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { LayoutDashboard, Users, Sprout, DollarSign, Leaf, CloudSun, Bot, FileText, Settings, LogOut, Bell } from 'lucide-react';
+import { LayoutDashboard, Users, Sprout, DollarSign, Leaf, CloudSun, Bot, FileText, Settings, LogOut} from 'lucide-react';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 

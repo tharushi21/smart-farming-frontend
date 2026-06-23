@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import axios from 'axios';
 
 const AIAssistantPage = () => {
@@ -8,17 +8,24 @@ const AIAssistantPage = () => {
   const sendMessage = async () => {
     if (!input.trim()) return;
 
-    // පණිවිඩය එකතු කිරීම
     const newMessages = [...messages, { sender: 'Farmer', text: input }];
     setMessages(newMessages);
     setInput('');
 
     try {
-      // Backend එකට යැවීම
-      const response = await axios.post('http://localhost:5000/api/ai/chat', { message: input });
-      setMessages([...newMessages, { sender: 'AI', text: response.data.reply }]);
+const token = localStorage.getItem("token");
+
+const response = await axios.post(
+  "http://localhost:5000/api/ai/chat",
+  { message: input },
+  {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+);      setMessages([...newMessages, { sender: 'AI', text: response.data.reply }]);
    } catch (error: any) {
-      console.error("Frontend Error:", error.response?.data || error.message); // මේක පේනවා
+      console.error("Frontend Error:", error.response?.data || error.message);
       setMessages([...newMessages, { sender: 'AI', text: 'Error: ' + (error.response?.data?.message || 'Server Error') }]);
     }
   };
