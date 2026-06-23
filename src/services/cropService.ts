@@ -8,7 +8,7 @@ const getAuthHeaders = () => {
   
   if (!token) {
     console.error("No token found in localStorage!");
-    return { headers: {} }; // Token එකක් නැත්නම් හිස් headers යවන්න
+    return { headers: {} }; 
   }
 
   return { headers: { Authorization: `Bearer ${token}` } };
