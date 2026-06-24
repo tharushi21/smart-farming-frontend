@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { api } from "../services/api";
 import { useNavigate } from "react-router-dom";
 
 const IncomeReportPage: React.FC = () => {
@@ -9,9 +9,14 @@ const IncomeReportPage: React.FC = () => {
     useEffect(() => {
         const fetchIncome = async () => {
             try {
-                const res = await axios.get("http://localhost:5000/api/reports/income", {
-                    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
-                });
+               const res = await api.get(
+  "/reports/income",
+  {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`
+    }
+  }
+);
                 setIncomeData(res.data);
             } catch (error) { console.error("Error:", error); }
         };

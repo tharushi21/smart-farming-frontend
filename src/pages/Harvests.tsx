@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
+import { api } from "../services/api";
 
 interface HarvestItem {
   _id: string;
@@ -21,9 +22,9 @@ const Harvests: React.FC = () => {
   const fetchHarvests = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get(`http://localhost:5000/api/harvests/crop/${cropId}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+     const response = await api.get(`/harvests/crop/${cropId}`, {
+  headers: { Authorization: `Bearer ${token}` }
+});
       setHarvests(response.data);
     } catch (error) {
       console.error("Error fetching harvests:", error);
@@ -38,14 +39,18 @@ const Harvests: React.FC = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.post("http://localhost:5000/api/harvests/add", {
-        crop: cropId,
-        quantity: parseFloat(quantity),
-        sellingPrice: parseFloat(sellingPrice),
-        date
-      }, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+     const response = await api.post(
+  "/harvests/add",
+  {
+    crop: cropId,
+    quantity: parseFloat(quantity),
+    sellingPrice: parseFloat(sellingPrice),
+    date
+  },
+  {
+    headers: { Authorization: `Bearer ${token}` }
+  }
+);
       
       // දත්ත සාර්ථකව එකතු වූ පසු UI එකට අලුත් දත්තය එක් කිරීම
       setHarvests([response.data, ...harvests]);

@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import axios from "axios";
+import { api } from "../services/api";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line } from "recharts";
 
 const ReportsPage: React.FC = () => {
@@ -27,9 +27,14 @@ const ReportsPage: React.FC = () => {
 
   // API එකෙන් දත්ත ලබා ගැනීම
   useEffect(() => {
-    axios.get("http://localhost:5000/api/reports/summary", {
-      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-    })
+    api.get(
+  "/reports/summary",
+  {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`
+    }
+  }
+)
     .then(res => setStats(res.data))
     .catch(err => console.error("Error fetching report data:", err));
   }, []);

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"; 
 import { useNavigate } from "react-router-dom";
-import axios from "axios"; 
+// import axios from "axios"; 
+import { api } from "../services/api";
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 
 interface ExpenseItem {
@@ -46,9 +47,9 @@ const Expenses: React.FC = () => {
         const token = localStorage.getItem("token"); 
         
         // 🚨 Backend එකේ router.get("/user/:userId", getExpenses) එකට හරියටම මැච් කළා
-        const response = await axios.get(`http://localhost:5000/api/expenses/user/${userId}`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        const response = await api.get(`/expenses/user/${userId}`, {
+  headers: { Authorization: `Bearer ${token}` }
+});
         
         setExpenses(response.data); 
       } catch (error) {
@@ -75,10 +76,9 @@ const Expenses: React.FC = () => {
       };
 
       // 🚨 Backend router.post("/add", createExpense) එකට මැච් කළා
-      const response = await axios.post("http://localhost:5000/api/expenses/", expenseData, {
-       headers: { Authorization: `Bearer ${token}` }
-   });
-    
+      const response = await api.post("/expenses", expenseData, {
+  headers: { Authorization: `Bearer ${token}` }
+});
 
       setExpenses([response.data, ...expenses]);
       resetForm();
@@ -94,7 +94,7 @@ const Expenses: React.FC = () => {
       const token = localStorage.getItem("token");
       
       // 🚨 Backend router.delete("/delete/:id", deleteExpense) එකට මැච් කළා
-      await axios.delete(`http://localhost:5000/api/expenses/${id}`, {
+     await api.delete(`/expenses/${id}`, {
   headers: { Authorization: `Bearer ${token}` }
 });
 
@@ -126,7 +126,7 @@ const Expenses: React.FC = () => {
       };
 
       // 🚨 Backend router.put("/update/:id", updateExpense) එකට මැච් කළා
-      const response = await axios.put(`http://localhost:5000/api/expenses/${selectedId}`, updatedData, {
+    const response = await api.put(`/expenses/${selectedId}`, updatedData, {
   headers: { Authorization: `Bearer ${token}` }
 });
 

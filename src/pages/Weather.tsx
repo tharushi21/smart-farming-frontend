@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import axios from "axios";
+import { api } from "../services/api";
 
 interface WeatherData {
   temp: number;
@@ -20,10 +20,12 @@ const WeatherPage: React.FC = () => {
   const [weather, setWeather] = useState<WeatherData | null>(null);
 
   const fetchWeather = (cityName: string) => {
-    axios.get(`http://localhost:5000/api/weather/data`, { 
-      params: { city: cityName },
-      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-    })
+    api.get("/weather/data", {
+  params: { city: cityName },
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem("token")}`,
+  },
+})
     .then(res => setWeather(res.data))
     .catch(err => console.error("Error fetching weather:", err));
   };

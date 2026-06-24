@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { LayoutDashboard, Users, Sprout, DollarSign, Leaf, CloudSun, Bot, FileText, Settings, LogOut} from 'lucide-react';
 import { useNavigate } from "react-router-dom";
-import axios from 'axios';
+// import axios from 'axios';
+import { api } from "../services/api";
 
 const AdminDashboard: React.FC = () => {
   const navigate = useNavigate();
@@ -15,11 +16,17 @@ const AdminDashboard: React.FC = () => {
         const config = { headers: { Authorization: `Bearer ${token}` } };
 
         // Profile දත්ත
-        const profileRes = await axios.get("http://localhost:5000/api/users/profile", config);
+        const profileRes = await api.get(
+  "/users/profile",
+  config
+);
         setAdminName(profileRes.data.name);
 
         // Stats දත්ත
-        const statsRes = await axios.get("http://localhost:5000/api/dashboard/stats", config);
+        const statsRes = await api.get(
+  "/dashboard/stats",
+  config
+);
         console.log("API Response:", statsRes.data); // දත්ත එනවාදැයි බැලීමට
         setStats(statsRes.data);
       } catch (error) {

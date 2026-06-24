@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+// import axios from "axios";
+import { api } from "../services/api";
 import { useNavigate } from "react-router-dom";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
@@ -17,21 +18,47 @@ const AdminHarvestPage: React.FC = () => {
 
     const loadHarvests = async () => {
         try {
-            const res = await axios.get("http://localhost:5000/api/harvests/admin/all", {
-                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
-            });
+            const res = await api.get(
+  "/harvests/admin/all",
+  {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`
+    }
+  }
+);
             setHarvests(res.data);
         } catch (error) { console.error("Error loading harvests:", error); }
     };
 
-    useEffect(() => { loadHarvests(); }, []);
+    useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const res = await api.get("/harvests/admin/all", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      });
+
+      setHarvests(res.data);
+    } catch (error) {
+      console.error("Error loading harvests:", error);
+    }
+  };
+
+  fetchData();
+}, []);
 
     const handleDelete = async (id: string) => {
         if (window.confirm("Are you sure you want to delete this harvest record?")) {
             try {
-                await axios.delete(`http://localhost:5000/api/harvests/${id}`, {
-                    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
-                });
+               await api.delete(
+  `/harvests/${id}`,
+  {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`
+    }
+  }
+);
                 loadHarvests();
             } catch (error) {
                 console.error("Delete error:", error);
@@ -42,9 +69,15 @@ const AdminHarvestPage: React.FC = () => {
     const handleUpdate = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            await axios.put(`http://localhost:5000/api/harvests/${editingId}`, formData, {
-                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
-            });
+            await api.put(
+  `/harvests/${editingId}`,
+  formData,
+  {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`
+    }
+  }
+);
             setIsEditModalOpen(false);
             loadHarvests();
         } catch (error) { 

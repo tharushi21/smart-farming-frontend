@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { api } from "../services/api";
 import { useNavigate } from "react-router-dom";
 
 const FarmerReportPage: React.FC = () => {
     const navigate = useNavigate();
     const [farmers, setFarmers] = useState([]);
     useEffect(() => {
-        axios.get("http://localhost:5000/api/reports/farmers", { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } })
-            .then(res => setFarmers(res.data));
+        api.get(
+  "/reports/farmers",
+  {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`
+    }
+  }
+)
+.then(res => setFarmers(res.data));
     }, []);
 
     return (

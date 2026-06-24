@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { api } from "../services/api";
 import { useNavigate } from "react-router-dom";
 
 const CropReportPage: React.FC = () => {
     const navigate = useNavigate();
     const [crops, setCrops] = useState([]);
     useEffect(() => {
-        axios.get("http://localhost:5000/api/reports/crops", { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } })
-            .then(res => setCrops(res.data));
+       api.get("/reports/crops", {
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem("token")}`
+  }
+})
+.then(res => setCrops(res.data));
     }, []);
 
     return (

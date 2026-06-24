@@ -1,6 +1,5 @@
 import  { useState } from 'react';
-import axios from 'axios';
-
+import { api } from "../services/api";
 const AIAssistantPage = () => {
   const [messages, setMessages] = useState<{ sender: string; text: string }[]>([]);
   const [input, setInput] = useState('');
@@ -12,18 +11,19 @@ const AIAssistantPage = () => {
     setMessages(newMessages);
     setInput('');
 
-    try {
-const token = localStorage.getItem("token");
+  try {
+  const token = localStorage.getItem("token");
 
-const response = await axios.post(
-  "http://localhost:5000/api/ai/chat",
-  { message: input },
-  {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  }
-);      setMessages([...newMessages, { sender: 'AI', text: response.data.reply }]);
+  const response = await api.post(
+    "/ai/chat",
+    { message: input },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );   
+ setMessages([...newMessages, { sender: 'AI', text: response.data.reply }]);
    } catch (error: any) {
       console.error("Frontend Error:", error.response?.data || error.message);
       setMessages([...newMessages, { sender: 'AI', text: 'Error: ' + (error.response?.data?.message || 'Server Error') }]);

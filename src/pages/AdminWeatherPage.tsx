@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { api } from "../services/api";
 import { useNavigate } from "react-router-dom";
 
 const AdminWeatherPage: React.FC = () => {
@@ -9,14 +9,35 @@ const AdminWeatherPage: React.FC = () => {
 
   const loadWeather = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/weather/data?city=${city}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
-      });
+      const res = await api.get(
+  `/weather/data?city=${city}`,
+  {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`
+    }
+  }
+);
       setWeather(res.data);
     } catch (error) { console.error("Error:", error); }
   };
 
-  useEffect(() => { loadWeather(); }, [city]);
+  useEffect(() => {
+  const loadWeather = async () => {
+    try {
+      const res = await api.get(`/weather/data?city=${city}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      });
+
+      setWeather(res.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  loadWeather();
+}, [city]);
 
   return (
     <div className="flex h-screen bg-gray-50">

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { api } from "../services/api";
 import { useNavigate } from "react-router-dom";
 import { LayoutDashboard, Users as UsersIcon } from 'lucide-react';
 
@@ -13,7 +13,7 @@ const Users: React.FC = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/users");
+      const res = await api.get("/users");
       setUsers(res.data);
     } catch (err) { console.error("Error fetching users:", err); }
   };
@@ -23,7 +23,10 @@ const Users: React.FC = () => {
   const handleAddUser = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/users/add", formData);
+      await api.post(
+  "/users/add",
+  formData
+);
       fetchUsers();
       setIsModalOpen(false);
       setFormData({ name: "", email: "", role: "Farmer", status: "Active" });
@@ -32,7 +35,10 @@ const Users: React.FC = () => {
 
   const handleUpdateUser = async () => {
     try {
-      await axios.put(`http://localhost:5000/api/users/update/${selectedUser._id}`, formData);
+      await api.put(
+  `/users/update/${selectedUser._id}`,
+  formData
+);
       fetchUsers();
       setIsModalOpen(false);
     } catch (err) { console.error("Error updating user:", err); }
@@ -41,7 +47,9 @@ const Users: React.FC = () => {
   const handleDelete = async (id: string) => {
     if (window.confirm("Are you sure?")) {
       try {
-        await axios.delete(`http://localhost:5000/api/users/delete/${id}`);
+       await api.delete(
+  `/users/delete/${id}`
+);
         fetchUsers();
       } catch (err) { console.error("Error deleting user:", err); }
     }

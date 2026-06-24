@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
+import { api } from "../services/api";
 
 const AdminCrops: React.FC = () => {
   const navigate = useNavigate();
@@ -13,9 +14,9 @@ const AdminCrops: React.FC = () => {
     const fetchAllCrops = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get("http://localhost:5000/api/crops", {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        const res = await api.get("/crops", {
+  headers: { Authorization: `Bearer ${token}` }
+});
         setCrops(res.data);
       } catch (error) {
         console.error("API Error:", error);
@@ -31,9 +32,9 @@ const handleDelete = async (id: string) => {
   if (window.confirm("Are you sure?")) {
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:5000/api/crops/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await api.delete(`/crops/${id}`, {
+  headers: { Authorization: `Bearer ${token}` }
+});
       setCrops(crops.filter((c) => c._id !== id));
     } catch (error) {
       console.error(error); // මෙතන error එක මොකක්ද කියලා මට කියන්න
@@ -46,9 +47,13 @@ const handleDelete = async (id: string) => {
     e.preventDefault();
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.put(`http://localhost:5000/api/crops/${selectedCrop._id}`, selectedCrop, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await api.put(
+  `/crops/${selectedCrop._id}`,
+  selectedCrop,
+  {
+    headers: { Authorization: `Bearer ${token}` }
+  }
+);
       setCrops(crops.map(c => c._id === selectedCrop._id ? res.data : c));
       setIsEditModalOpen(false);
     } catch (error) {

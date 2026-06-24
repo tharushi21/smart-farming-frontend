@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { api } from "../services/api";
 import { useNavigate } from "react-router-dom";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
@@ -36,19 +36,31 @@ const [input, setInput] = useState('');
 
       try {
         // 1. Dashboard Stats ලබාගැනීම
-        const res = await axios.get("http://localhost:5000/api/dashboard/stats", { headers });
-        setDashboardData(res.data);
+        const res = await api.get(
+  "/dashboard/stats",
+  { headers }
+);
+setDashboardData(res.data);
 
         // 2. Weather දත්ත ලබාගැනීම (අපේ අලුත් Weather route එක)
-        const weatherRes = await axios.get("http://localhost:5000/api/weather/data", { headers });
-        setWeather(weatherRes.data);
+        const weatherRes = await api.get(
+  "/weather/data",
+  { headers }
+);
+setWeather(weatherRes.data);
 
         // 3. Chart Data ලබාගැනීම
-        const chartRes = await axios.get("http://localhost:5000/api/dashboard/chart", { headers });
-        setChartData(chartRes.data);
+        const chartRes = await api.get(
+  "/dashboard/chart",
+  { headers }
+);
+setChartData(chartRes.data);
         
-        const aiRes = await axios.get("http://localhost:5000/api/ai/advice", { headers });
-        setAiAdvice(aiRes.data.advice);
+        const aiRes = await api.get(
+  "/ai/advice",
+  { headers }
+);
+setAiAdvice(aiRes.data.advice);
       } catch (err) {
         console.error("Error fetching data:", err);
       }
@@ -66,11 +78,11 @@ const [input, setInput] = useState('');
   try {
     const token = localStorage.getItem("token");
     // මෙතන අනිවාර්යයෙන්ම Backend එකේ route එකට request එක යන්න ඕනේ
-    const res = await axios.post(
-      "http://localhost:5000/api/ai/chat", 
-      { message: currentInput },
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
+    const res = await api.post(
+  "/ai/chat",
+  { message: currentInput },
+  { headers: { Authorization: `Bearer ${token}` } }
+);
     
     // AI එකෙන් එන උත්තරය messages වලට එකතු කිරීම
     setMessages((prev) => [...prev, { sender: 'bot', text: res.data.reply }]);
