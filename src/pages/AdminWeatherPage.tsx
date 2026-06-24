@@ -6,36 +6,21 @@ const AdminWeatherPage: React.FC = () => {
   const navigate = useNavigate();
   const [weather, setWeather] = useState<any>(null);
   const [city, setCity] = useState("Anuradhapura");
+const loadWeather = async () => {
+  try {
+    const res = await api.get(`/weather/data?city=${city}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`
+      }
+    });
 
-  const loadWeather = async () => {
-    try {
-      const res = await api.get(
-  `/weather/data?city=${city}`,
-  {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`
-    }
+    setWeather(res.data);
+  } catch (error) {
+    console.error("Error:", error);
   }
-);
-      setWeather(res.data);
-    } catch (error) { console.error("Error:", error); }
-  };
+};
 
-  useEffect(() => {
-  const loadWeather = async () => {
-    try {
-      const res = await api.get(`/weather/data?city=${city}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        }
-      });
-
-      setWeather(res.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
+useEffect(() => {
   loadWeather();
 }, [city]);
 
